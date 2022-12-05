@@ -265,7 +265,7 @@ fn testnet_genesis(
 		});
 
 	// stakers: all validators and nominators.
-	const ENDOWMENT: Balance = 10_000_000 * DOLLARS;
+	const ENDOWMENT: Balance = 10_000_000 * MUKS;
 	const STASH: Balance = ENDOWMENT / 1000;
 	let mut rng = rand::thread_rng();
 	let stakers = initial_authorities
@@ -325,6 +325,7 @@ fn testnet_genesis(
 				.map(|member| (member, STASH))
 				.collect(),
 		},
+		assets: Default::default(),
 		council: CouncilConfig::default(),
 		technical_committee: TechnicalCommitteeConfig {
 			members: endowed_accounts
@@ -342,8 +343,8 @@ fn testnet_genesis(
 		},
 		transaction_payment: Default::default(),
 		nomination_pools: NominationPoolsConfig {
-			min_create_bond: 10 * DOLLARS,
-			min_join_bond: 1 * DOLLARS,
+			min_create_bond: 10 * MUKS,
+			min_join_bond: 1 * MUKS,
 			..Default::default()
 		},
 	}
