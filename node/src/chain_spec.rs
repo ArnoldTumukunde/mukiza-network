@@ -8,7 +8,7 @@ use mukiza_runtime::{
 	BABE_GENESIS_EPOCH_CONFIG, wasm_binary_unwrap,
 };
 use pallet_im_online::sr25519::AuthorityId as ImOnlineId;
-use sc_service::ChainType;
+use sc_service::{ChainType, Properties};
 use sc_telemetry::TelemetryEndpoints;
 use sp_consensus_babe::AuthorityId as BabeId;
 use sp_core::{crypto::UncheckedInto, sr25519, Pair, Public};
@@ -58,6 +58,14 @@ pub fn authority_keys_from_seed(s: &str) -> (AccountId, AccountId, BabeId, Grand
 	)
 }
 
+/// Token
+pub fn muk_properties() -> Properties {
+	let mut p = Properties::new();
+	p.insert("ss58format".into(), 42.into());
+	p.insert("tokenDecimals".into(), 18.into());
+	p.insert("tokenSymbol".into(), "MUK".into());
+	p
+}
 pub fn development_config() -> Result<ChainSpec, String> {
 
 	Ok(ChainSpec::from_genesis(
@@ -90,7 +98,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		None,
 		None,
 		// Properties
-		None,
+		Some(muk_properties()),
 		// Extensions
 		None,
 	))
@@ -135,7 +143,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 		None,
 		// Properties
 		None,
-		None,
+		Some(muk_properties()),
 		// Extensions
 		None,
 	))
@@ -156,7 +164,7 @@ pub fn staging_network_config() -> ChainSpec {
 		),
 		None,
 		None,
-		None,
+		Some(muk_properties()),
 		Default::default(),
 	)
 }
